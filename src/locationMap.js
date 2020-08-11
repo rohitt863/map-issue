@@ -1,25 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
-import mapboxgl from "mapbox-gl/dist/mapbox-gl.js";
+//import mapboxgl from "mapbox-gl/dist/mapbox-gl.js";
 import PropTypes from "prop-types";
 
 var map;
 
 const LocationMap = props => {
   const mapContainer = useRef(null);
-  const [coordinates] = useState([-0.1262362, 51.5001524]);
   const [zoom] = useState(1);
   const initMapboxAndSlider = () => {
-    mapboxgl.accessToken =
+    window.mapboxgl.accessToken =
       "pk.eyJ1Ijoidmd1cm5hbmkiLCJhIjoiY2s2NmF5ZXpmMTAxdTNsbnI3dmh4cTJ3ZiJ9.rPIHv99-UOJ2ZRbX3Sb-hg";
-    map = new mapboxgl.Map({
+      
+      var map = new window.mapboxgl.Map({
       container: mapContainer.current,
-      style: "mapbox://styles/mapbox/streets-v11",
-      center: coordinates,
-      zoom: zoom,
-      attributionControl: false,
-      maxZoom: 8,
-      minZoom: 1
-    });
+      style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+      center: [-74.5, 40], // starting position [lng, lat]
+      zoom: 9 // starting zoom
+      });
     // map.setRenderWorldCopies(false)
     map.on("load", () => {
       map.resize();
@@ -33,7 +30,7 @@ const LocationMap = props => {
   }, []);
 
   return (
-    <div className="location-map" ref={mapContainer} />
+    <div className="location-map" style={{width: '400px', height: '300px'}} ref={mapContainer} />
   )
 };
 LocationMap.propTypes = {
